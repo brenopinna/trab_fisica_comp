@@ -1,25 +1,74 @@
 ---
-title: "Meus Slides!"
-author: "Breno Pinna"
+title: "Quarto"
+author: Breno Pinna
+date: last-modified
+lang: pt 
+date-format: long
+documentclass: beamer 
 format:
-  revealjs:
-    theme: default
-jupyter: python3
-# execute:
-  # echo: true    # mostra o código
-
+  beamer:
+    theme: Madrid
+    pdf-engine: pdflatex
+    toc: true
+    fig-height: 5.3
+    dpi: 200
+header-includes:
+  - \setbeamertemplate{section page}
+    {
+      \begin{centering}
+        \vspace*{1cm}
+        \begin{beamercolorbox}[sep=12pt,center,shadow=true,rounded=true]{section title}
+          \usebeamerfont{section title}\insertsectionhead
+        \end{beamercolorbox}
+      \end{centering}
+    }
+    # esse treco tira o numerozinho do numero da sessao
 ---
 
-# Testando antes
+# Introdução <!-- esses sao os slides de titulo principais -->
+
+## Introdução <!-- esses sao os normais, com conteudo -->
+- Este slide explica o cenário inicial.
+- Serve como base para o restante da apresentação.
+
+## Introdução
+- Mostrar como criar slides com sumário automático no Quarto + Beamer.
+
+# Mais um teste
+
+## Mais um teste - E se eu fizer isso?
+
+- Tem conteudo aqui
+- mais um teste
+
+# Teste do Grafico
+
+## Testando graficos
 
 ```{python}
 #| fig-align: center
+#| fig-cap: Grafico da tangente pra testar
 import numpy as np
 import matplotlib.pyplot as plt
 
-x = np.linspace(0, 2*np.pi, 200)
-y = np.cos(x)
-plt.plot(x, y)
-plt.title("cos(x)")
+plt.rcParams.update({
+    'font.size': 16,        # tamanho de labels e ticks
+    'axes.titlesize': 20,   # tamanho do título do gráfico
+    'axes.labelsize': 18,   # tamanho dos labels x e y
+    'legend.fontsize': 16,  # tamanho da legenda
+    'xtick.labelsize': 14,  # tamanho dos ticks x
+    'ytick.labelsize': 14   # tamanho dos ticks y
+}) # configuracao dos tamanhos da fonte
+
+t = np.linspace(-np.pi/2, np.pi/2, 100)
+# plt.figure(figsize=(5, 4))
+plt.plot(t, np.tan(t))
+plt.title("So um grafico pra testar!")
+plt.xlim(-2*np.pi, 2*np.pi)
+plt.ylim(-10, 10)
+plt.xlabel("x")
+plt.ylabel("tan(x)")
+plt.grid(True)
+plt.tight_layout()
 plt.show()
 ```

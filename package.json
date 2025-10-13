@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "quarto preview slides.qmd -o index.html --no-browser",
-    "build": "quarto render slides.qmd -o index.html"
+    "dev": "quarto preview slides.qmd --no-browser",
+    "build": "quarto render slides.qmd && quarto convert slides.qmd"
   },
   "keywords": [],
   "author": "",
