@@ -1,0 +1,25 @@
+---
+title: "Meus Slides!"
+author: "Breno Pinna"
+format:
+  revealjs:
+    theme: default
+jupyter: python3
+# execute:
+  # echo: true    # mostra o código
+
+---
+
+# Testando antes
+
+```{python}
+#| fig-align: center
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.linspace(0, 2*np.pi, 200)
+y = np.cos(x)
+plt.plot(x, y)
+plt.title("cos(x)")
+plt.show()
+```
