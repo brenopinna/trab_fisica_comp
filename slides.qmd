@@ -47,3 +47,7 @@ plt.grid(True)
 plt.tight_layout()
 plt.show()
 ```
+
+---
+
+Criando slides sem titulo!

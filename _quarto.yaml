@@ -20,8 +20,6 @@ format:
     output-file: notebook.ipynb
 header-includes: |
   \setbeamertemplate{frametitle continuation}{}
-  \setbeamertemplate{footline}{}
-  \addtocounter{framenumber}{-1}
   % isso aqui serve so para nao aparecer o numero do sumario
   \setbeamertemplate{section page}
   {
