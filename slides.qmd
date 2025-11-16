@@ -1,37 +1,12 @@
----
-title: "Quarto"
-author: Breno Pinna
-date: last-modified
-lang: pt 
-date-format: long
-documentclass: beamer 
-format:
-  beamer:
-    theme: Madrid
-    pdf-engine: pdflatex
-    toc: true
-    fig-height: 5.3
-    dpi: 200
-header-includes:
-  - \setbeamertemplate{section page}
-    {
-      \begin{centering}
-        \vspace*{1cm}
-        \begin{beamercolorbox}[sep=12pt,center,shadow=true,rounded=true]{section title}
-          \usebeamerfont{section title}\insertsectionhead
-        \end{beamercolorbox}
-      \end{centering}
-    }
-    # esse treco tira o numerozinho do numero da sessao
----
-
 # Introdução <!-- esses sao os slides de titulo principais -->
 
-## Introdução <!-- esses sao os normais, com conteudo -->
+## Explicação <!-- esses sao os normais, com conteudo -->
+
 - Este slide explica o cenário inicial.
 - Serve como base para o restante da apresentação.
 
-## Introdução
+## Explicação
+
 - Mostrar como criar slides com sumário automático no Quarto + Beamer.
 
 # Mais um teste

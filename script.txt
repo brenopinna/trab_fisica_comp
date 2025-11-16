@@ -1,5 +1,0 @@
-#CRIANDO O .venv:
-python3 -m venv .venv # cria o virtual environment
-source .venv/bin/activate # entra no venv
-#instalando dependencias necessarias
-pip install jupyter numpy matplotlib

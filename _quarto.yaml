@@ -1,0 +1,37 @@
+project:
+  output-dir: dist
+title: "Modelo SIR"
+author:
+  - Breno Pinna
+  - João A. Proença
+date: last-modified
+lang: pt
+date-format: long
+documentclass: beamer
+format:
+  beamer:
+    theme: Madrid
+    pdf-engine: pdflatex
+    toc: true
+    toc-title: "Sumário"
+    fig-height: 5.3
+    dpi: 200
+  ipynb:
+    output-file: notebook.ipynb
+header-includes: |
+  \setbeamertemplate{frametitle continuation}{}
+  \setbeamertemplate{footline}{}
+  \addtocounter{framenumber}{-1}
+  % isso aqui serve so para nao aparecer o numero do sumario
+  \setbeamertemplate{section page}
+  {
+    \begin{centering}
+      \vspace*{1cm}
+      \begin{beamercolorbox}[sep=12pt,center,shadow=true,rounded=true]{section title}
+        \usebeamerfont{section title}\insertsectionhead
+      \end{beamercolorbox}
+    \end{centering}
+  }
+  % esse treco tira o numerozinho do numero da sessao
+  \institute[UFF]{Universidade Federal Fluminense}
+  % isso aqui coloca bonitinho o nome da universidade
