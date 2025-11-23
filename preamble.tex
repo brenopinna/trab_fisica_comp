@@ -1,0 +1,22 @@
+\usepackage[usenames,dvipsnames]{xcolor}
+% permite o uso da cor ForestGreen
+
+\setbeamertemplate{frametitle continuation}{}
+% isso aqui serve so para nao aparecer o numero do sumario (ex: Sumario I)
+
+\setbeamertemplate{section page}
+{
+  \begin{centering}
+    \vspace*{1cm}
+    \begin{beamercolorbox}[sep=12pt,center,shadow=true,rounded=true]{section title}
+      \usebeamerfont{section title}\insertsectionhead
+    \end{beamercolorbox}
+  \end{centering}
+}
+% isso aqui tira o "Section 1" antes de todo titulo de sessao
+
+\AtBeginSubsection{}
+% isso aqui tira as paginas de titulo de subsessao
+
+\institute[UFF]{Universidade Federal Fluminense}
+% isso aqui coloca bonitinho o nome da universidade

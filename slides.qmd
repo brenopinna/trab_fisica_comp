@@ -1,53 +1,222 @@
-# Introdução <!-- esses sao os slides de titulo principais -->
+# Introduzindo o Modelo SIR <!-- esses sao os slides de titulo principais -->
 
-## Explicação <!-- esses sao os normais, com conteudo -->
+## Apresentação Teórica <!-- esses sao os normais, com conteudo -->
 
-- Este slide explica o cenário inicial.
-- Serve como base para o restante da apresentação.
+Seja uma doença infecciosa, causada por algum agente biológico,
+transmitida através do contato entre infectados e saudáveis. 
 
-## Explicação
+Dividiremos a população em 3 grupos ($\textcolor{ForestGreen}{S}\textcolor{red}{I}\textcolor{blue}{R}$) :
 
-- Mostrar como criar slides com sumário automático no Quarto + Beamer.
+- $\textcolor{ForestGreen}{Suscetíveis}$ à contaminação: Nunca apresentaram a doença, mas podem contrair
+- $\textcolor{red}{Infectados}$: Atualmente infectados com a doença
+- $\textcolor{blue}{Removidos}$: Foram infectados e ganharam imunidade permanente
 
-# Mais um teste
+Suponhamos que não ocorrem nascimentos ou mortes durante o período
+analisado, ou seja, o número de indivíduos
+$N = \textcolor{ForestGreen}{S}(t) + \textcolor{red}{I}(t) + \textcolor{blue}{R}(t)$
+é constante
 
-## Mais um teste - E se eu fizer isso?
+## Modelando matematicamente os grupos
 
-- Tem conteudo aqui
-- mais um teste
+$$
+\frac{dS}{dt} = - \beta S I \qquad (\beta = \tau \mu) \tag{1}
+$$
 
-# Teste do Grafico
+$$
+\frac{dI}{dt} = \beta S I - \gamma I \tag{2}
+$$
 
-## Testando graficos
+$$
+\frac{dR}{dt} = \gamma I \tag{3}
+$$
+
+- $SI$: número de pares possíveis de suscetível e infectado
+- $\mu$: probabilidade por unidade de tempo de ocorrer um encontro SI
+- $\tau$: probabilidade de um encontro resultar em contágio
+- $\beta$: taxa de transmissão da doença
+- $\gamma$: taxa de recuperação dos infectados
+
+## Interpretando as equações
+
+Supondo $S(0) \approx N$ e $0 < I(0) \ll N$ (condições iniciais, supondo
+uma grande maioria suscetível), temos que a equação $(2)$ só vai gerar uma
+epidemia caso $\frac{dI(0)}{dt} > 0$, ou seja
+
+$$
+\beta S(0) I(0) - \gamma I(0) > 0
+$$
+
+$$
+\beta S(0) I(0) > \gamma I(0) \qquad (\div \ \gamma I(0))
+$$
+
+$$
+\frac{\beta}{\gamma} S(0) > 1 \tag{4}
+$$
+
+---
+
+Chamamos o termo $R_0 = (\beta \backslash \gamma) S(0)$ de
+**número básico de reprodução**, que indica quantos indivíduos
+suscetíveis serão infectados por cada indivíduo infectado.
+
+Quanto maior ele for, mais rápido uma doença vai se espalhar. Se
+$R_0 < 1$, o número de infectados cai e não há epidemia.
+
+Reescrevendo a equação $(2)$ com esse novo conceito, temos:
+
+$$
+\frac{dI}{dt}\Bigg|_{t=0} = \gamma\,(R_0 - 1)\,I(0) \tag{5}
+$$
+
+Com isso, vemos que o crescimento inicial do número de infectados é
+diretamente proporcional ao valor de $R_0$, sendo esse parâmetro
+uma forma de avaliar se ocorrerá ou não uma epidemia.
+
+---
+
+Este sistema de equações diferenciais acopladas não possui solução
+analítica conhecida. Portanto, a solução é obtida numericamente.
+Desta vez, utilizaremos o método de Runge-Kutta de Ordem 4 (RK4) para resolver
+este sistema
+
+# O Método Runge-Kutta de Ordem 4 (RK4)
+
+## Descrevendo o funcionamento
+
+O método RK4 resolve sistemas de equações diferenciais acopladas do
+tipo $\frac{d\vec{r}}{dt} = \vec{f}(\vec{r}, t)$. Ele anda pequenos
+passos de tamanho $h$ a cada ciclo, e calcula iterativamente as soluções,
+seguindo a estrutura:
+
+$$
+\begin{aligned}
+  \vec{k}_1 &= h \vec{f}(\vec{r}_n, t_n), \\
+  \vec{k}_2 &= h \vec{f}\!\left(\vec{r}_n + \frac{1}{2}\vec{k}_1,\, t_n + \frac{1}{2}h\right), \\
+  \vec{k}_3 &= h \vec{f}\!\left(\vec{r}_n + \frac{1}{2}\vec{k}_2,\, t_n + \frac{1}{2}h\right), \\
+  \vec{k}_4 &= h \vec{f}\!\left(\vec{r}_n + \vec{k}_3,\, t_n + h\right), \\
+  \vec{r}(t_n+h) &= \vec{r}_{n+1} = \vec{r}_n(t_n)
+    + \frac{1}{6}\left(\vec{k}_1 + 2\vec{k}_2 + 2\vec{k}_3 + \vec{k}_4 \right), \\
+\end{aligned}
+$$
+
+onde $\vec{r}$ é o vetor cujos elementos são as funções que estão sendo derivadas e $\vec{f}(\vec{r}, t)$ é o vetor cujos elementos são os resultados das derivadas de
+$\vec{r}$.
+
+---
+
+Para o nosso problema, temos
+
+$$
+\begin{cases}
+\displaystyle\frac{dS}{dt} = - \beta S I \\[6pt]
+\displaystyle\frac{dI}{dt} = \beta S I - \gamma I \\[6pt]
+\displaystyle\frac{dR}{dt} = \gamma I
+\end{cases}
+$$
+
+Transformando no modelo usado para o RK4, temos
+
+$$
+\begin{aligned} 
+\vec{r}(t) &= (S(t),\,I(t),\,R(t)) \\
+\vec{f}(\vec{r}, t) &= (- \beta S I,\, \beta S I - \gamma I,\,\gamma I)
+\end{aligned}
+$$
+
+e sendo $\vec{k}_i$ um vetor de 3 elementos, que seguem a mesma ordem
+de $\vec{r}$.
+
+## Primeiros testes
 
 ```{python}
-#| fig-align: center
-#| fig-cap: Grafico da tangente pra testar
 import numpy as np
 import matplotlib.pyplot as plt
 
-plt.rcParams.update({
-    'font.size': 16,        # tamanho de labels e ticks
-    'axes.titlesize': 20,   # tamanho do título do gráfico
-    'axes.labelsize': 18,   # tamanho dos labels x e y
-    'legend.fontsize': 16,  # tamanho da legenda
-    'xtick.labelsize': 14,  # tamanho dos ticks x
-    'ytick.labelsize': 14   # tamanho dos ticks y
-}) # configuracao dos tamanhos da fonte
+# parâmetros
+N = 100_000
+I0 = 2
+S0 = N - I0
+R0 = 5
+gamma = 0.2
+h = 0.1
+```
 
-t = np.linspace(-np.pi/2, np.pi/2, 100)
-# plt.figure(figsize=(5, 4))
-plt.plot(t, np.tan(t))
-plt.title("So um grafico pra testar!")
-plt.xlim(-2*np.pi, 2*np.pi)
-plt.ylim(-10, 10)
-plt.xlabel("x")
-plt.ylabel("tan(x)")
-plt.grid(True)
-plt.tight_layout()
-plt.show()
+```{python}
+def f(y, t, beta):
+  S, I, R = y
+
+  dS = - beta * S * I
+  dI = beta * S * I - gamma * I
+  dR = gamma * I
+  return np.array([dS, dI, dR])
+
+def rk4_sys(f, ti, tf, h, y0, beta):
+  tpoints = np.arange(ti, tf + h/2, h)   # +h/2 para ir acima do tf
+  n_steps = tpoints.size - 1
+
+  # esse trecho inicializa a solucao (com zeros)
+  d = len(y0) 
+  ypoints = np.zeros((n_steps + 1, d))
+  ypoints[0] = np.array(y0)
+
+  y = ypoints[0].copy()
+  for i in range(n_steps):
+      t = tpoints[i]
+      k1 = h * f(y, t, beta)
+      k2 = h * f(y + 0.5 * k1, t + 0.5 * h, beta)
+      k3 = h * f(y + 0.5 * k2, t + 0.5 * h, beta)
+      k4 = h * f(y + k3, t + h, beta)
+      y = y + (1.0/6.0) * (k1 + 2*k2 + 2*k3 + k4)
+      ypoints[i+1] = y
+
+  return tpoints, ypoints
+
+def calc_beta(R0):
+  return R0 * gamma / S0 # obtido por R0 = (beta/gamma) * S(0)
+
+def grafico(R0):
+  y0 = [S0, I0, R0] # condicoes iniciais
+
+  beta = calc_beta(R0)
+
+  t_sol, y_sol = rk4_sys(f, 0, 120, h, y0, beta)
+
+  y_sol = y_sol * 1e-4
+
+  # plot
+  plt.figure(figsize=(5, 3))
+  plt.plot(t_sol, y_sol[:,0], label='Suscetíveis (S)')
+  plt.plot(t_sol, y_sol[:,1], label='Infectados (I)')
+  plt.plot(t_sol, y_sol[:,2], label='Removidos (R)')
+  plt.xlabel('Tempo (dias)')
+  plt.ylabel(r'Nº de indivíduos $(\times 10^4)$')
+  plt.title(rf'Simulação SIR (RK4), com $R_0$ = {R0}')
+  plt.legend()
+  plt.show()
+```
+
+```{python}
+#| fig-align: center
+#| fig-cap: Grafico pra testar
+
+grafico(5)
 ```
 
 ---
 
-Criando slides sem titulo!
+```{python}
+#| fig-align: center
+#| fig-cap: Grafico pra testar
+
+grafico(2.5)
+```
+
+---
+
+```{python}
+#| fig-align: center
+#| fig-cap: Grafico pra testar
+
+grafico(2)
+```

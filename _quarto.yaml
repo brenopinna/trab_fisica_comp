@@ -1,6 +1,7 @@
 project:
   output-dir: dist
 title: "Modelo SIR"
+subtitle: "Simulando uma Epidemia Usando Matemática e Computação"
 author:
   - Breno Pinna
   - João A. Proença
@@ -10,6 +11,7 @@ date-format: long
 documentclass: beamer
 format:
   beamer:
+    slide-level: 3
     theme: Madrid
     pdf-engine: pdflatex
     toc: true
@@ -18,18 +20,4 @@ format:
     dpi: 200
   ipynb:
     output-file: notebook.ipynb
-header-includes: |
-  \setbeamertemplate{frametitle continuation}{}
-  % isso aqui serve so para nao aparecer o numero do sumario
-  \setbeamertemplate{section page}
-  {
-    \begin{centering}
-      \vspace*{1cm}
-      \begin{beamercolorbox}[sep=12pt,center,shadow=true,rounded=true]{section title}
-        \usebeamerfont{section title}\insertsectionhead
-      \end{beamercolorbox}
-    \end{centering}
-  }
-  % esse treco tira o numerozinho do numero da sessao
-  \institute[UFF]{Universidade Federal Fluminense}
-  % isso aqui coloca bonitinho o nome da universidade
+include-in-header: preamble.tex

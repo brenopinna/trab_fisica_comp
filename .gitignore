@@ -1,3 +1,5 @@
 .venv
 /.quarto/
 **/*.quarto_ipynb
+__pycache__
+dist/slides_files/*
