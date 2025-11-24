@@ -127,7 +127,13 @@ $$
 e sendo $\vec{k}_i$ um vetor de 3 elementos, que seguem a mesma ordem
 de $\vec{r}$.
 
-## Primeiros testes
+## Comparando valores de $R_0$
+
+Para iniciar a análise do modelo, será feita a comparação de três gráficos, cada um
+com o valor de $R_0$ de 5, 2,5 e 2. A expectativa é que valores maiores do número
+básico de reprodução gerem picos de infectados mais expressivos.
+
+---
 
 ```{python}
 import numpy as np
@@ -137,7 +143,6 @@ import matplotlib.pyplot as plt
 N = 100_000
 I0 = 2
 S0 = N - I0
-R0 = 5
 gamma = 0.2
 h = 0.1
 ```
@@ -191,14 +196,14 @@ def grafico(R0):
   plt.plot(t_sol, y_sol[:,2], label='Removidos (R)')
   plt.xlabel('Tempo (dias)')
   plt.ylabel(r'Nº de indivíduos $(\times 10^4)$')
-  plt.title(rf'Simulação SIR (RK4), com $R_0$ = {R0}')
+  plt.title(rf'População Simulada')
   plt.legend()
   plt.show()
 ```
 
 ```{python}
 #| fig-align: center
-#| fig-cap: Grafico pra testar
+#| fig-cap: Simulação do modelo SIR, com $R_0$ = 5
 
 grafico(5)
 ```
@@ -207,7 +212,7 @@ grafico(5)
 
 ```{python}
 #| fig-align: center
-#| fig-cap: Grafico pra testar
+#| fig-cap: Simulação do modelo SIR, com $R_0$ = 2.5
 
 grafico(2.5)
 ```
@@ -216,7 +221,13 @@ grafico(2.5)
 
 ```{python}
 #| fig-align: center
-#| fig-cap: Grafico pra testar
+#| fig-cap: Simulação do modelo SIR, com $R_0$ = 2
 
 grafico(2)
 ```
+
+---
+
+Por fim, é interessante o fato de que valores menores de $R_0$ não alcançam a contaminação de toda a população.
+Com isso, a conclusão que tiramos é que, quanto menor for a taxa de contaminação de uma doença,
+menor é seu alcance na população como um todo. 
