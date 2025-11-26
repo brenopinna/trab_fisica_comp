@@ -1,22 +1,24 @@
 # Introduzindo o Modelo SIR <!-- esses sao os slides de titulo principais -->
 
-## Apresentação Teórica <!-- esses sao os normais, com conteudo -->
+## Apresentação teórica <!-- esses sao os normais, com conteudo -->
 
 Seja uma doença infecciosa, causada por algum agente biológico,
 transmitida através do contato entre infectados e saudáveis. 
 
-Dividiremos a população em 3 grupos ($\textcolor{ForestGreen}{S}\textcolor{red}{I}\textcolor{blue}{R}$) :
+Dividiremos a população em 3 grupos ($\textcolor{ForestGreen}{S}\textcolor{red}{I}\textcolor{blue}{R}$):
 
-- $\textcolor{ForestGreen}{Suscetíveis}$ à contaminação: Nunca apresentaram a doença, mas podem contrair
-- $\textcolor{red}{Infectados}$: Atualmente infectados com a doença
-- $\textcolor{blue}{Removidos}$: Foram infectados e ganharam imunidade permanente
+- $\textcolor{ForestGreen}{Suscetíveis}$ à contaminação: nunca apresentaram a doença, mas podem contrair;
+- $\textcolor{red}{Infectados}$: atualmente infectados com a doença;
+- $\textcolor{blue}{Removidos}$: foram infectados e ganharam imunidade permanente.
 
 Suponhamos que não ocorrem nascimentos ou mortes durante o período
 analisado, ou seja, o número de indivíduos
 $N = \textcolor{ForestGreen}{S}(t) + \textcolor{red}{I}(t) + \textcolor{blue}{R}(t)$
-é constante
+é constante.
 
 ## Modelando matematicamente os grupos
+
+O modelo $\textcolor{ForestGreen}{S}\textcolor{red}{I}\textcolor{blue}{R}$ é caracterizado pelas seguintes equações:
 
 $$
 \frac{dS}{dt} = - \beta S I \qquad (\beta = \tau \mu) \tag{1}
@@ -30,17 +32,17 @@ $$
 \frac{dR}{dt} = \gamma I \tag{3}
 $$
 
-- $SI$: número de pares possíveis de suscetível e infectado
-- $\mu$: probabilidade por unidade de tempo de ocorrer um encontro SI
-- $\tau$: probabilidade de um encontro resultar em contágio
-- $\beta$: taxa de transmissão da doença
-- $\gamma$: taxa de recuperação dos infectados
+- $SI$: número de pares possíveis de um suscetível e um infectado;
+- $\mu$: probabilidade por unidade de tempo de ocorrer um encontro SI;
+- $\tau$: probabilidade de um encontro resultar em contágio;
+- $\beta$: taxa de transmissão da doença;
+- $\gamma$: taxa de recuperação dos infectados.
 
 ## Interpretando as equações
 
 Supondo $S(0) \approx N$ e $0 < I(0) \ll N$ (condições iniciais, supondo
 uma grande maioria suscetível), temos que a equação $(2)$ só vai gerar uma
-epidemia caso $\frac{dI(0)}{dt} > 0$, ou seja
+epidemia caso $\frac{dI(0)}{dt} > 0$, ou seja:
 
 $$
 \beta S(0) I(0) - \gamma I(0) > 0
@@ -78,7 +80,7 @@ uma forma de avaliar se ocorrerá ou não uma epidemia.
 Este sistema de equações diferenciais acopladas não possui solução
 analítica conhecida. Portanto, a solução é obtida numericamente.
 Desta vez, utilizaremos o método de Runge-Kutta de Ordem 4 (RK4) para resolver
-este sistema
+este sistema.
 
 # O Método Runge-Kutta de Ordem 4 (RK4)
 
@@ -105,7 +107,7 @@ $\vec{r}$.
 
 ---
 
-Para o nosso problema, temos
+Para o nosso problema, temos:
 
 $$
 \begin{cases}
@@ -115,7 +117,7 @@ $$
 \end{cases}
 $$
 
-Transformando no modelo usado para o RK4, temos
+Transformando no modelo usado para o RK4, temos:
 
 $$
 \begin{aligned} 
@@ -236,36 +238,26 @@ menor é seu alcance na população como um todo.
 
 ## Modelando a vacinação
 
-Até agora, vimos o comportamento da epidemia considerando que nada foi feito para combatê-la. Mas isso não é muito realista.
+Até agora, vimos o comportamento da epidemia considerando que nada foi feito para combatê-la.
 
 Vamos considerar que uma vacina contra a doença foi desenvolvida, e que a população começou a ser vacinada com ela assim que a epidemia começou.
 
 Para isso, acrescentaremos um novo grupo ao modelo $\textcolor{ForestGreen}{S}\textcolor{red}{I}\textcolor{blue}{R}$:
 - $\textcolor{purple}{Vacinados}$: Foram vacinados contra a doença e ganharam imunidade permanente.
 
+Com isto, teremos que: $N = \textcolor{ForestGreen}{S}(t) + \textcolor{red}{I}(t) + \textcolor{blue}{R}(t) + \textcolor{purple}{V}(t)$.
+
 ## Modelo SIRV
 
 $$
-N = \textcolor{ForestGreen}{S}(t) + \textcolor{red}{I}(t) + \textcolor{blue}{R}(t) + \textcolor{purple}{V}(t) \tag{9}
+\frac{dS}{dt} = - \beta S I - \nu S \qquad \tag{6}
 $$
 
 $$
-\frac{dS}{dt} = - \beta S I - \nu S \qquad \tag{10}
+\frac{dV}{dt} = \nu S \tag{7}
 $$
 
-$$
-\frac{dI}{dt} = \beta S I - \gamma I \tag{11}
-$$
-
-$$
-\frac{dR}{dt} = \gamma I \tag{12}
-$$
-
-$$
-\frac{dV}{dt} = \nu S \tag{13}
-$$
-
-- $\nu$: taxa de vacinação
+- $\nu$: taxa de vacinação.
 
 ## Limitações do modelo
 
