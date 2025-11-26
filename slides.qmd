@@ -56,7 +56,7 @@ $$
 
 ---
 
-Chamamos o termo $R_0 = (\beta \backslash \gamma) S(0)$ de
+Chamamos o termo $R_0 = (\beta / \gamma) S(0)$ de
 **número básico de reprodução**, que indica quantos indivíduos
 suscetíveis serão infectados por cada indivíduo infectado.
 
