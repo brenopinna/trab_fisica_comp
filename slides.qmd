@@ -230,4 +230,46 @@ grafico(2)
 
 Por fim, é interessante o fato de que valores menores de $R_0$ não alcançam a contaminação de toda a população.
 Com isso, a conclusão que tiramos é que, quanto menor for a taxa de contaminação de uma doença,
-menor é seu alcance na população como um todo. 
+menor é seu alcance na população como um todo.
+
+# O Efeito da Vacinação
+
+## Modelando a vacinação
+
+Até agora, vimos o comportamento da epidemia considerando que nada foi feito para combatê-la. Mas isso não é muito realista.
+
+Vamos considerar que uma vacina contra a doença foi desenvolvida, e que a população começou a ser vacinada com ela assim que a epidemia começou.
+
+Para isso, acrescentaremos um novo grupo ao modelo $\textcolor{ForestGreen}{S}\textcolor{red}{I}\textcolor{blue}{R}$:
+- $\textcolor{purple}{Vacinados}$: Foram vacinados contra a doença e ganharam imunidade permanente.
+
+## Modelo SIRV
+
+$$
+N = \textcolor{ForestGreen}{S}(t) + \textcolor{red}{I}(t) + \textcolor{blue}{R}(t) + \textcolor{purple}{V}(t) \tag{9}
+$$
+
+$$
+\frac{dS}{dt} = - \beta S I - \nu S \qquad \tag{10}
+$$
+
+$$
+\frac{dI}{dt} = \beta S I - \gamma I \tag{11}
+$$
+
+$$
+\frac{dR}{dt} = \gamma I \tag{12}
+$$
+
+$$
+\frac{dV}{dt} = \nu S \tag{13}
+$$
+
+- $\nu$: taxa de vacinação
+
+## Limitações do modelo
+
+Esta modelagem da vacinação faz algumas suposições grosseiras:
+
+- Considera-se que a vacinação começou assim que os primeiros indivíduos foram infectados.
+- Considera-se que a taxa de vacinação é constante e proporcional ao número de suscetíveis.
