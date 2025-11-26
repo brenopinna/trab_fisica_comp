@@ -19,6 +19,7 @@ A formatação dos commits é inspirada na proposta em [Padrões de commits, de 
 
 **Instale as dependências necessárias.**
 - `pip install jupyter numpy matplotlib`
+- `quarto install tinytex`
 
 **Para renderizar o projeto em PDF e em Jupyter Notebook, entre na pasta do projeto e use:**
 - `quarto render`
