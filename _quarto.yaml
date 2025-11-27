@@ -1,7 +1,7 @@
 project:
   output-dir: dist
 title: "Modelo SIR"
-subtitle: "Simulando uma Epidemia Usando Matemática e Computação"
+subtitle: "Simulando uma epidemia usando Matemática e Computação"
 author:
   - Breno Pinna
   - João A. Proença
@@ -18,6 +18,7 @@ format:
     toc-title: "Sumário"
     fig-height: 5.3
     dpi: 200
+    latex-min-runs: 3
   ipynb:
     output-file: notebook.ipynb
 include-in-header: preamble.tex

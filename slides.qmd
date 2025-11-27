@@ -1,4 +1,4 @@
-# Introduzindo o Modelo SIR <!-- esses sao os slides de titulo principais -->
+# Introduzindo o modelo SIR <!-- esses sao os slides de titulo principais -->
 
 ## Apresentação teórica <!-- esses sao os normais, com conteudo -->
 
@@ -68,7 +68,7 @@ Com isso, vemos que o crescimento inicial do número de infectados é diretament
 
 Este sistema de equações diferenciais acopladas não possui solução analítica conhecida. Portanto, a solução é obtida numericamente. Desta vez, utilizaremos o método de Runge-Kutta de ordem 4 (RK4) para resolver este sistema.
 
-# O Método de Runge-Kutta de Ordem 4 (RK4)
+# O método de Runge-Kutta de ordem 4 (RK4)
 
 ## Descrevendo o funcionamento
 
@@ -120,7 +120,7 @@ Para iniciar a análise do modelo, será feita a comparação de três gráficos
 import numpy as np
 import matplotlib.pyplot as plt
 
-# parâmetros
+# Parâmetros.
 N = 100_000
 
 R0 = 0
@@ -142,13 +142,13 @@ def fSIR(y, t, beta):
   return np.array([dS, dI, dR])
 
 def calc_beta(R_0):
-  return R_0 * gamma / S0 # obtido por R_0 = (beta/gamma) * S(0)
+  return R_0 * gamma / S0 # Obtido por: R_0 = (beta/gamma) * S(0)
 
 def rk4_sys_SIR(f, ti, tf, h, y0, beta):
-  tpoints = np.arange(ti, tf + h/2, h)   # +h/2 para ir acima do tf
+  tpoints = np.arange(ti, tf + h/2, h)   # +h/2 para ir acima do tf.
   n_steps = tpoints.size - 1
 
-  # esse trecho inicializa a solucao (com zeros)
+  # Este trecho inicializa a solução (com zeros).
   d = len(y0)
   ypoints = np.zeros((n_steps + 1, d))
   ypoints[0] = np.array(y0)
@@ -166,7 +166,7 @@ def rk4_sys_SIR(f, ti, tf, h, y0, beta):
   return tpoints, ypoints
 
 def graficoSIR(R_0):
-  y0 = [S0, I0, R0] # condicoes iniciais
+  y0 = [S0, I0, R0] # Condições iniciais.
 
   beta = calc_beta(R_0)
 
@@ -174,14 +174,14 @@ def graficoSIR(R_0):
 
   y_sol = y_sol * 1e-4
 
-  # plot
+  # Plot.
   plt.figure(figsize=(5, 3))
   plt.plot(t_sol, y_sol[:,0], 'g', label='Suscetíveis (S)')
   plt.plot(t_sol, y_sol[:,1], 'r', label='Infectados (I)')
   plt.plot(t_sol, y_sol[:,2], 'b', label='Removidos (R)')
   plt.xlabel('Tempo (dias)')
   plt.ylabel(r'Nº de indivíduos ($\times 10^4$)')
-  plt.title('Simulação de Epidemia')
+  plt.title('Simulação de epidemia')
   plt.legend()
   plt.show()
 ```
@@ -215,7 +215,7 @@ graficoSIR(2)
 
 Por fim, é interessante o fato de que valores menores de $R_0$ não alcançam a contaminação de toda a população. Com isso, a conclusão que tiramos é que, quanto menor for a taxa de contaminação de uma doença, menor é seu alcance na população como um todo.
 
-# Modelando o Efeito da Vacinação
+# Modelando o efeito da vacinação
 
 ## Vacinando apenas durante a epidemia
 
@@ -253,7 +253,7 @@ Vamos comparar os gráficos de duas simulações com taxas de vacinação $\mu$ 
 ---
 
 ```{python}
-# parâmetros
+# Parâmetros.
 V0 = 0
 
 R_0 = 2.5
@@ -291,13 +291,12 @@ def rk4_sys_SIRV(f, ti, tf, h, y0, mi):
   return tpoints, ypoints
 
 def graficoSIRV(mi):
-  y0 = [S0, I0, R0, V0] # condicoes iniciais
+  y0 = [S0, I0, R0, V0]
 
   t_sol, y_sol = rk4_sys_SIRV(fSIRV, 0, 120, h, y0, mi)
 
   y_sol = y_sol * 1e-4
 
-  # plot
   plt.figure(figsize=(5, 3))
   plt.plot(t_sol, y_sol[:,0], 'g', label='Suscetíveis (S)')
   plt.plot(t_sol, y_sol[:,1], 'r', label='Infectados (I)')
@@ -305,7 +304,7 @@ def graficoSIRV(mi):
   plt.plot(t_sol, y_sol[:,3], 'purple', label='Vacinados (V)')
   plt.xlabel('Tempo (dias)')
   plt.ylabel(r'Nº de indivíduos ($\times 10^4$)')
-  plt.title('Simulação de Epidemia com Vacinação')
+  plt.title('Simulação de epidemia com vacinação')
   plt.legend()
   plt.show()
 ```
@@ -346,7 +345,7 @@ Podemos concluir que:
 
 Agora vamos considerar uma outra situação: uma parte da população foi vacinada antes da epidemia começar, e não houve campanha de vacinação durante a epidemia.
 
-Neste caso, o número de vacinados $V$ se torna constante: $V = \rho S(0)$. Logo, o número de indivíduos suscetíveis no início da epidemia já não é mais o total, e sim $(1 - \rho) S(0)$.
+Neste caso, o número de vacinados $V$ se torna constante: $V = \rho S(0)$. Logo, o número de indivíduos suscetíveis no início da epidemia passa a ser $S(0) - V$, ou $(1 - \rho) S(0)$ (desconsiderando os infectados).
 
 ---
 
@@ -371,8 +370,9 @@ Vamos fazer três simulações de epidemia, com $\rho$ valendo $0.3$, $0.5$ e $0
 ---
 
 ```{python}
-# parâmetro
+# Parâmetros.
 I0 = 100
+S0_normal = N - I0
 ```
 
 ```{python}
@@ -380,7 +380,9 @@ I0 = 100
 #| fig-cap: Simulação do modelo SIRV, com $\rho = 0.3$
 
 ro = 0.3
-V0 = ro * S0
+V0 = ro * S0_normal
+S0 = S0_normal - V0
+
 graficoSIRV(0)
 ```
 
@@ -391,7 +393,9 @@ graficoSIRV(0)
 #| fig-cap: Simulação do modelo SIRV, com $\rho = 0.5$
 
 ro = 0.5
-V0 = ro * S0
+V0 = ro * S0_normal
+S0 = S0_normal - V0
+
 graficoSIRV(0)
 ```
 
@@ -402,7 +406,9 @@ graficoSIRV(0)
 #| fig-cap: Simulação do modelo SIRV, com $\rho = 0.6$
 
 ro = 0.6
-V0 = ro * S0
+V0 = ro * S0_normal
+S0 = S0_normal - V0
+
 graficoSIRV(0)
 ```
 
@@ -423,13 +429,14 @@ Vamos pensar num caso mais completo de epidemia.
 ---
 
 ```{python}
-# parâmetros
+# Parâmetros.
 N = 5_000_000
 
 I0 = 1
-S0 = N - I0
+S0_normal = N - I0
 ro = 0.3
-V0 = ro * S0
+V0 = ro * S0_normal
+S0 = S0_normal - V0
 
 R_0 = 3
 beta = calc_beta(R_0)
@@ -441,7 +448,7 @@ h = 0.1
 
 ```{python}
 #| fig-align: center
-#| fig-cap: Simulação do bônus modelo SIRV$
+#| fig-cap: Simulação do bônus modelo SIRV
 
 graficoSIRV(mi)
 ```
