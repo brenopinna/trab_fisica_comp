@@ -2,8 +2,7 @@
 
 ## Apresentação teórica <!-- esses sao os normais, com conteudo -->
 
-Seja uma doença infecciosa, causada por algum agente biológico,
-transmitida através do contato entre infectados e saudáveis. 
+Seja uma doença infecciosa, causada por algum agente biológico, transmitida através do contato entre infectados e saudáveis. 
 
 Dividiremos a população em 3 grupos ($\textcolor{ForestGreen}{S}\textcolor{red}{I}\textcolor{blue}{R}$):
 
@@ -11,10 +10,7 @@ Dividiremos a população em 3 grupos ($\textcolor{ForestGreen}{S}\textcolor{red
 - $\textcolor{red}{Infectados}$: atualmente infectados com a doença;
 - $\textcolor{blue}{Removidos}$: foram infectados e ganharam imunidade permanente.
 
-Suponhamos que não ocorrem nascimentos ou mortes durante o período
-analisado, ou seja, o número de indivíduos
-$N = \textcolor{ForestGreen}{S}(t) + \textcolor{red}{I}(t) + \textcolor{blue}{R}(t)$
-é constante.
+Suponhamos que não ocorrem nascimentos ou mortes durante o período analisado, ou seja, o número de indivíduos $N = \textcolor{ForestGreen}{S}(t) + \textcolor{red}{I}(t) + \textcolor{blue}{R}(t)$ é constante.
 
 ## Modelando matematicamente os grupos
 
@@ -40,9 +36,7 @@ $$
 
 ## Interpretando as equações
 
-Supondo $S(0) \approx N$ e $0 < I(0) \ll N$ (condições iniciais, supondo
-uma grande maioria suscetível), temos que a equação $(2)$ só vai gerar uma
-epidemia caso $\frac{dI(0)}{dt} > 0$, ou seja:
+Supondo $S(0) \approx N$ e $0 < I(0) \ll N$ (condições iniciais, supondo uma grande maioria suscetível), temos que a equação $(2)$ só vai gerar uma epidemia caso $\frac{dI(0)}{dt} > 0$, ou seja:
 
 $$
 \beta S(0) I(0) - \gamma I(0) > 0
@@ -58,12 +52,9 @@ $$
 
 ---
 
-Chamamos o termo $R_0 = (\beta / \gamma) S(0)$ de
-**número básico de reprodução**, que indica quantos indivíduos
-suscetíveis serão infectados por cada indivíduo infectado.
+Chamamos o termo $R_0 = (\beta / \gamma) S(0)$ de **número básico de reprodução**, que indica quantos indivíduos suscetíveis serão infectados por cada indivíduo infectado.
 
-Quanto maior ele for, mais rápido uma doença vai se espalhar. Se
-$R_0 < 1$, o número de infectados cai e não há epidemia.
+Quanto maior ele for, mais rápido uma doença vai se espalhar. Se $R_0 < 1$, o número de infectados cai e não há epidemia.
 
 Reescrevendo a equação $(2)$ com esse novo conceito, temos:
 
@@ -71,25 +62,17 @@ $$
 \frac{dI}{dt}\Bigg|_{t=0} = \gamma\,(R_0 - 1)\,I(0) \tag{5}
 $$
 
-Com isso, vemos que o crescimento inicial do número de infectados é
-diretamente proporcional ao valor de $R_0$, sendo esse parâmetro
-uma forma de avaliar se ocorrerá ou não uma epidemia.
+Com isso, vemos que o crescimento inicial do número de infectados é diretamente proporcional ao valor de $R_0$, sendo esse parâmetro uma forma de avaliar se ocorrerá ou não uma epidemia.
 
 ---
 
-Este sistema de equações diferenciais acopladas não possui solução
-analítica conhecida. Portanto, a solução é obtida numericamente.
-Desta vez, utilizaremos o método de Runge-Kutta de Ordem 4 (RK4) para resolver
-este sistema.
+Este sistema de equações diferenciais acopladas não possui solução analítica conhecida. Portanto, a solução é obtida numericamente. Desta vez, utilizaremos o método de Runge-Kutta de Ordem 4 (RK4) para resolver este sistema.
 
 # O Método Runge-Kutta de Ordem 4 (RK4)
 
 ## Descrevendo o funcionamento
 
-O método RK4 resolve sistemas de equações diferenciais acopladas do
-tipo $\frac{d\vec{r}}{dt} = \vec{f}(\vec{r}, t)$. Ele anda pequenos
-passos de tamanho $h$ a cada ciclo, e calcula iterativamente as soluções,
-seguindo a estrutura:
+O método RK4 resolve sistemas de equações diferenciais acopladas do tipo $\frac{d\vec{r}}{dt} = \vec{f}(\vec{r}, t)$. Ele anda pequenos passos de tamanho $h$ a cada ciclo, e calcula iterativamente as soluções, seguindo a estrutura:
 
 $$
 \begin{aligned}
@@ -102,8 +85,7 @@ $$
 \end{aligned}
 $$
 
-onde $\vec{r}$ é o vetor cujos elementos são as funções que estão sendo derivadas e $\vec{f}(\vec{r}, t)$ é o vetor cujos elementos são os resultados das derivadas de
-$\vec{r}$.
+onde $\vec{r}$ é o vetor cujos elementos são as funções que estão sendo derivadas e $\vec{f}(\vec{r}, t)$ é o vetor cujos elementos são os resultados das derivadas de $\vec{r}$.
 
 ---
 
@@ -126,14 +108,11 @@ $$
 \end{aligned}
 $$
 
-e sendo $\vec{k}_i$ um vetor de 3 elementos, que seguem a mesma ordem
-de $\vec{r}$.
+e sendo $\vec{k}_i$ um vetor de 3 elementos, que seguem a mesma ordem de $\vec{r}$.
 
 ## Comparando valores de $R_0$
 
-Para iniciar a análise do modelo, será feita a comparação de três gráficos, cada um
-com o valor de $R_0$ de $5$, $2.5$ e $2$. A expectativa é que valores maiores do número
-básico de reprodução gerem picos de infectados mais expressivos.
+Para iniciar a análise do modelo, será feita a comparação de três gráficos, cada um com o valor de $R_0$ de $5$, $2.5$ e $2$. A expectativa é que valores maiores do número básico de reprodução gerem picos de infectados mais expressivos.
 
 ---
 
@@ -143,6 +122,7 @@ import matplotlib.pyplot as plt
 
 # parâmetros
 N = 100_000
+R0 = 0
 I0 = 2
 S0 = N - I0
 gamma = 0.2
@@ -158,8 +138,8 @@ def fSIR(y, t, beta):
   dR = gamma * I
   return np.array([dS, dI, dR])
 
-def calc_beta(R0):
-  return R0 * gamma / S0 # obtido por R0 = (beta/gamma) * S(0)
+def calc_beta(R_0):
+  return R_0 * gamma / S0 # obtido por R_0 = (beta/gamma) * S(0)
 
 def rk4_sys_SIR(f, ti, tf, h, y0, beta):
   tpoints = np.arange(ti, tf + h/2, h)   # +h/2 para ir acima do tf
@@ -182,10 +162,10 @@ def rk4_sys_SIR(f, ti, tf, h, y0, beta):
 
   return tpoints, ypoints
 
-def graficoSIR(R0):
+def graficoSIR(R_0):
   y0 = [S0, I0, R0] # condicoes iniciais
 
-  beta = calc_beta(R0)
+  beta = calc_beta(R_0)
 
   t_sol, y_sol = rk4_sys_SIR(fSIR, 0, 120, h, y0, beta)
 
@@ -230,9 +210,7 @@ graficoSIR(2)
 
 ---
 
-Por fim, é interessante o fato de que valores menores de $R_0$ não alcançam a contaminação de toda a população.
-Com isso, a conclusão que tiramos é que, quanto menor for a taxa de contaminação de uma doença,
-menor é seu alcance na população como um todo.
+Por fim, é interessante o fato de que valores menores de $R_0$ não alcançam a contaminação de toda a população. Com isso, a conclusão que tiramos é que, quanto menor for a taxa de contaminação de uma doença, menor é seu alcance na população como um todo.
 
 # Modelando o Efeito da Vacinação
 
@@ -240,7 +218,7 @@ menor é seu alcance na população como um todo.
 
 Até agora, vimos o comportamento da epidemia considerando que nada foi feito para combatê-la.
 
-Vamos considerar que uma vacina contra a doença foi desenvolvida, e que a população começou a ser vacinada com ela assim que a epidemia começou.
+Vamos considerar que uma vacina contra a doença foi desenvolvida, e que, assim que a epidemia começou, inciou-se uma campanha de vacinação da população.
 
 Para isso, acrescentaremos um novo grupo ao modelo $\textcolor{ForestGreen}{S}\textcolor{red}{I}\textcolor{blue}{R}$:
 
@@ -267,11 +245,15 @@ Esta modelagem da vacinação faz algumas suposições grosseiras:
 
 ## Comparando valores de $\mu$
 
+Vamos comparar os gráficos de duas simulações com taxas de vacinação $\mu$ iguais a $0.001$, $0.01$ e $0.05$, respectivamente, e com $R_0 = 2.5$.
+
+---
+
 ```{python}
 # parâmetros
-R0 = 2.5
+R_0 = 2.5
 V0 = 0
-beta = calc_beta(R0)
+beta = calc_beta(R_0)
 ```
 
 ```{python}
@@ -326,9 +308,9 @@ def graficoSIRV(mi):
 
 ```{python}
 #| fig-align: center
-#| fig-cap: Simulação do modelo SIRV, com $\nu = 0.0001$
+#| fig-cap: Simulação do modelo SIRV, com $\nu = 0.001$
 
-graficoSIRV(0.0001)
+graficoSIRV(0.001)
 ```
 
 ---
@@ -341,6 +323,16 @@ graficoSIRV(0.01)
 ```
 
 ---
+
+```{python}
+#| fig-align: center
+#| fig-cap: Simulação do modelo SIRV, com $\nu = 0.05$
+
+graficoSIRV(0.05)
+```
+
+---
+
 Podemos concluir que:
 
 - Com uma taxa de vacinação suficientemente alta, grande parte da população não vacinada também não é infectada pela doença (imunidadade de rebanho).
@@ -351,3 +343,65 @@ Podemos concluir que:
 Agora vamos considerar uma outra situação: uma parte da população foi vacinada antes da epidemia começar, e não houve campanha de vacinação durante a epidemia.
 
 Neste caso, o número de vacinados $V$ se torna constante: $V = \rho S(0) \tag{8}$. Logo, o número de indivíduos suscetíveis no início da epidemia já não é mais o total, e sim $(1 - \rho) S(0)$.
+
+---
+
+Pensando no oposto da equação $(4)$, a proporção mínima da população que deve estar vacinada para que uma epidemia não ocorra (imunidade de rebanho) é:
+
+$$
+\frac{\beta}{\gamma} (1 - \rho) S(0) \le 1
+$$
+
+$$
+(1 - \rho) R_0 \le 1 \qquad (R_0 = (\beta / \gamma) S(0))
+$$
+
+$$
+\rho \ge \frac{1}{R_0} - 1 \tag{8}
+$$
+
+## Comparando valores de $\rho$
+
+Vamos fazer três simulações de epidemia, com $\rho$ valendo $0.3$, $0.5$ e $0.6$, respectivamente, e com o número inicial de infectados $I(0) = 100$.
+
+---
+
+```{python}
+# parâmetro
+I0 = 100
+```
+
+```{python}
+#| fig-align: center
+#| fig-cap: Simulação do modelo SIRV, com $\rho = 0.3$
+
+ro = 0.3
+V0 = ro * S0
+graficoSIRV(0)
+```
+
+---
+
+```{python}
+#| fig-align: center
+#| fig-cap: Simulação do modelo SIRV, com $\rho = 0.5$
+
+ro = 0.5
+V0 = ro * S0
+graficoSIRV(0)
+```
+
+---
+
+```{python}
+#| fig-align: center
+#| fig-cap: Simulação do modelo SIRV, com $\rho = 0.6$
+
+ro = 0.6
+V0 = ro * S0
+graficoSIRV(0)
+```
+
+---
+
+Podemos ver que, quando maior é a proporção da população que já está vacinada, mais achatada se torna a curva de infectados.
