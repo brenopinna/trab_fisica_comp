@@ -122,10 +122,13 @@ import matplotlib.pyplot as plt
 
 # parâmetros
 N = 100_000
+
 R0 = 0
 I0 = 2
 S0 = N - I0
+
 gamma = 0.2
+
 h = 0.1
 ```
 
@@ -251,8 +254,9 @@ Vamos comparar os gráficos de duas simulações com taxas de vacinação $\mu$ 
 
 ```{python}
 # parâmetros
-R_0 = 2.5
 V0 = 0
+
+R_0 = 2.5
 beta = calc_beta(R_0)
 ```
 
@@ -405,3 +409,39 @@ graficoSIRV(0)
 ---
 
 Podemos ver que, quando maior é a proporção da população que já está vacinada, mais achatada se torna a curva de infectados.
+
+## Bônus
+
+Vamos pensar num caso mais completo de epidemia.
+
+- A população é bem maior: 5 milhões de habitantes.
+- Inicialmente, uma única pessoa se infecta com a doença.
+- A taxa de transmissão é de 3 pessoas por dia, e a taxa de recuperação é de 0.1.
+- Já existia vacina para a doença antes da epidemia, mas apenas 30% da população estava vacinada.
+- Assim que o surto começou, começou-se uma campanha de vacinação, a uma taxa de 0.01% da população saudável por dia.
+
+---
+
+```{python}
+# parâmetros
+N = 5_000_000
+
+I0 = 1
+S0 = N - I0
+ro = 0.3
+V0 = ro * S0
+
+R_0 = 3
+beta = calc_beta(R_0)
+gamma = 0.1
+mi = 0.01
+
+h = 0.1
+```
+
+```{python}
+#| fig-align: center
+#| fig-cap: Simulação do bônus modelo SIRV$
+
+graficoSIRV(mi)
+```
