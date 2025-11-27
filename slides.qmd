@@ -246,7 +246,7 @@ Esta modelagem da vacinação faz algumas suposições grosseiras:
 - Considera-se que a vacinação começou assim que os primeiros indivíduos foram infectados.
 - Considera-se que a taxa de vacinação é constante e proporcional ao número de suscetíveis.
 
-## Comparando valores de $\mu$
+## Comparando valores de $\nu$
 
 Vamos comparar os gráficos de duas simulações com taxas de vacinação $\mu$ iguais a $0.001$, $0.01$ e $0.05$, respectivamente, e com $R_0 = 2.5$.
 
@@ -261,16 +261,16 @@ beta = calc_beta(R_0)
 ```
 
 ```{python}
-def fSIRV(y, t, mi):
+def fSIRV(y, t, ni):
   S, I, R, V = y
 
-  dS = - beta * S * I - mi * S
+  dS = - beta * S * I - ni * S
   dI = beta * S * I - gamma * I
   dR = gamma * I
-  dV = mi * S
+  dV = ni * S
   return np.array([dS, dI, dR, dV])
 
-def rk4_sys_SIRV(f, ti, tf, h, y0, mi):
+def rk4_sys_SIRV(f, ti, tf, h, y0, ni):
   tpoints = np.arange(ti, tf + h/2, h)
   n_steps = tpoints.size - 1
   
@@ -281,19 +281,19 @@ def rk4_sys_SIRV(f, ti, tf, h, y0, mi):
   y = ypoints[0].copy()
   for i in range(n_steps):
       t = tpoints[i]
-      k1 = h * fSIRV(y, t, mi)
-      k2 = h * fSIRV(y + 0.5 * k1, t + 0.5 * h, mi)
-      k3 = h * fSIRV(y + 0.5 * k2, t + 0.5 * h, mi)
-      k4 = h * fSIRV(y + k3, t + h, mi)
+      k1 = h * fSIRV(y, t, ni)
+      k2 = h * fSIRV(y + 0.5 * k1, t + 0.5 * h, ni)
+      k3 = h * fSIRV(y + 0.5 * k2, t + 0.5 * h, ni)
+      k4 = h * fSIRV(y + k3, t + h, ni)
       y = y + (1.0/6.0) * (k1 + 2*k2 + 2*k3 + k4)
       ypoints[i+1] = y
 
   return tpoints, ypoints
 
-def graficoSIRV(mi):
+def graficoSIRV(ni):
   y0 = [S0, I0, R0, V0]
 
-  t_sol, y_sol = rk4_sys_SIRV(fSIRV, 0, 120, h, y0, mi)
+  t_sol, y_sol = rk4_sys_SIRV(fSIRV, 0, 120, h, y0, ni)
 
   y_sol = y_sol * 1e-4
 
@@ -336,6 +336,30 @@ graficoSIRV(0.05)
 
 ---
 
+```{python}
+def graficoSIRV_infectados(ni):
+  y0 = [S0, I0, R0, V0]
+
+  t_sol, y_sol = rk4_sys_SIRV(fSIRV, 0, 120, h, y0, ni)
+
+  plt.figure(figsize=(5, 3))
+  plt.plot(t_sol, y_sol[:,1], 'r', label=rf'$\nu = {ni}$')
+  plt.xlabel('Tempo (dias)')
+  plt.ylabel('Nº de Infectados (I)')
+  plt.title('Simulação de epidemia com vacinação')
+  plt.legend()
+  plt.show()
+```
+
+```{python}
+#| fig-align: center
+#| fig-cap: Simulação do modelo SIRV
+
+graficoSIRV_infectados(0.05)
+```
+
+---
+
 Podemos concluir que:
 
 - Com uma taxa de vacinação suficientemente alta, grande parte da população não vacinada também não é infectada pela doença (imunidadade de rebanho).
@@ -360,7 +384,7 @@ $$
 $$
 
 $$
-\rho \ge \frac{1}{R_0} - 1 \tag{8}
+\rho \ge 1 - \frac{1}{R_0} \tag{8}
 $$
 
 ## Comparando valores de $\rho$
@@ -414,6 +438,43 @@ graficoSIRV(0)
 
 ---
 
+```{python}
+def graficoSIRV_infectados_ro():
+  ro = 0.5
+  V0 = ro * S0_normal
+  S0 = S0_normal - V0
+
+  y0 = [S0, I0, R0, V0]
+
+  t1_sol, y1_sol = rk4_sys_SIRV(fSIRV, 0, 120, h, y0, 0)
+
+  ro = 0.6
+  V0 = ro * S0_normal
+  S0 = S0_normal - V0
+
+  y0 = [S0, I0, R0, V0]
+
+  t2_sol, y2_sol = rk4_sys_SIRV(fSIRV, 0, 120, h, y0, 0)
+
+  plt.figure(figsize=(5, 3))
+  plt.plot(t1_sol, y1_sol[:,1], 'r--', label=rf'$\rho = 0.5$')
+  plt.plot(t2_sol, y2_sol[:,1], 'r', label=rf'$\rho = 0.6$')
+  plt.xlabel('Tempo (dias)')
+  plt.ylabel('Nº de Infectados (I)')
+  plt.title('Simulação de epidemia com vacinação')
+  plt.legend()
+  plt.show()
+```
+
+```{python}
+#| fig-align: center
+#| fig-cap: Simulação do modelo SIRV
+
+graficoSIRV_infectados_ro()
+```
+
+---
+
 Podemos ver que, quando maior é a proporção da população que já está vacinada, mais achatada se torna a curva de infectados.
 
 ## Bônus
@@ -441,14 +502,12 @@ S0 = S0_normal - V0
 R_0 = 3
 beta = calc_beta(R_0)
 gamma = 0.1
-mi = 0.01
-
-h = 0.1
+ni = 0.01
 ```
 
 ```{python}
 #| fig-align: center
 #| fig-cap: Simulação do bônus modelo SIRV
 
-graficoSIRV(mi)
+graficoSIRV(ni)
 ```
