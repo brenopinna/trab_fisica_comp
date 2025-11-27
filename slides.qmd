@@ -198,7 +198,7 @@ def graficoSIR(R0):
   plt.plot(t_sol, y_sol[:,2], 'b', label='Removidos (R)')
   plt.xlabel('Tempo (dias)')
   plt.ylabel(r'Nº de indivíduos ($\times 10^4$)')
-  plt.title(rf'Simulação de Epidemia')
+  plt.title('Simulação de Epidemia')
   plt.legend()
   plt.show()
 ```
@@ -315,10 +315,10 @@ def graficoSIRV(mi):
   plt.plot(t_sol, y_sol[:,0], 'g', label='Suscetíveis (S)')
   plt.plot(t_sol, y_sol[:,1], 'r', label='Infectados (I)')
   plt.plot(t_sol, y_sol[:,2], 'b', label='Removidos (R)')
-  plt.plot(t_sol, ysol[:,3), 'purple', label='Vacinados (V)'])
+  plt.plot(t_sol, ysol[:,3], 'purple', label='Vacinados (V)')
   plt.xlabel('Tempo (dias)')
   plt.ylabel(r'Nº de indivíduos ($\times 10^4$)')
-  plt.title(rf'Simulação de Epidemia com Vacinação')
+  plt.title('Simulação de Epidemia com Vacinação')
   plt.legend()
   plt.show()
 ```
