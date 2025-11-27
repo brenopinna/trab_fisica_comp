@@ -158,10 +158,10 @@ def rk4_sys_SIR(f, ti, tf, h, y0, beta):
   y = ypoints[0].copy()
   for i in range(n_steps):
       t = tpoints[i]
-      k1 = h * fSIR(y, t, beta)
-      k2 = h * fSIR(y + 0.5 * k1, t + 0.5 * h, beta)
-      k3 = h * fSIR(y + 0.5 * k2, t + 0.5 * h, beta)
-      k4 = h * fSIR(y + k3, t + h, beta)
+      k1 = h * f(y, t, beta)
+      k2 = h * f(y + 0.5 * k1, t + 0.5 * h, beta)
+      k3 = h * f(y + 0.5 * k2, t + 0.5 * h, beta)
+      k4 = h * f(y + k3, t + h, beta)
       y = y + (1.0/6.0) * (k1 + 2*k2 + 2*k3 + k4)
       ypoints[i+1] = y
 
@@ -283,10 +283,10 @@ def rk4_sys_SIRV(f, ti, tf, h, y0, ni):
   y = ypoints[0].copy()
   for i in range(n_steps):
       t = tpoints[i]
-      k1 = h * fSIRV(y, t, ni)
-      k2 = h * fSIRV(y + 0.5 * k1, t + 0.5 * h, ni)
-      k3 = h * fSIRV(y + 0.5 * k2, t + 0.5 * h, ni)
-      k4 = h * fSIRV(y + k3, t + h, ni)
+      k1 = h * f(y, t, ni)
+      k2 = h * f(y + 0.5 * k1, t + 0.5 * h, ni)
+      k3 = h * f(y + 0.5 * k2, t + 0.5 * h, ni)
+      k4 = h * f(y + k3, t + h, ni)
       y = y + (1.0/6.0) * (k1 + 2*k2 + 2*k3 + k4)
       ypoints[i+1] = y
 

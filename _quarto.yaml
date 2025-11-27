@@ -11,6 +11,7 @@ date-format: long
 documentclass: beamer
 format:
   beamer:
+    pdf-engine: pdflatex
     slide-level: 3
     theme: Madrid
     toc: true
