@@ -132,7 +132,7 @@ de $\vec{r}$.
 ## Comparando valores de $R_0$
 
 Para iniciar a análise do modelo, será feita a comparação de três gráficos, cada um
-com o valor de $R_0$ de 5, 2,5 e 2. A expectativa é que valores maiores do número
+com o valor de $R_0$ de $5$, $2.5$ e $2$. A expectativa é que valores maiores do número
 básico de reprodução gerem picos de infectados mais expressivos.
 
 ---
@@ -234,15 +234,16 @@ Por fim, é interessante o fato de que valores menores de $R_0$ não alcançam a
 Com isso, a conclusão que tiramos é que, quanto menor for a taxa de contaminação de uma doença,
 menor é seu alcance na população como um todo.
 
-# O Efeito da Vacinação
+# Modelando o Efeito da Vacinação
 
-## Modelando a vacinação
+## Vacinando apenas durante a epidemia
 
 Até agora, vimos o comportamento da epidemia considerando que nada foi feito para combatê-la.
 
 Vamos considerar que uma vacina contra a doença foi desenvolvida, e que a população começou a ser vacinada com ela assim que a epidemia começou.
 
 Para isso, acrescentaremos um novo grupo ao modelo $\textcolor{ForestGreen}{S}\textcolor{red}{I}\textcolor{blue}{R}$:
+
 - $\textcolor{purple}{Vacinados}$: Foram vacinados contra a doença e ganharam imunidade permanente.
 
 Com isto, teremos que: $N = \textcolor{ForestGreen}{S}(t) + \textcolor{red}{I}(t) + \textcolor{blue}{R}(t) + \textcolor{purple}{V}(t)$.
@@ -325,7 +326,28 @@ def graficoSIRV(mi):
 
 ```{python}
 #| fig-align: center
-#| fig-cap: Simulação do modelo SIRV, com $\nu = 0,0001$
+#| fig-cap: Simulação do modelo SIRV, com $\nu = 0.0001$
 
 graficoSIRV(0.0001)
 ```
+
+---
+
+```{python}
+#| fig-align: center
+#| fig-cap: Simulação do modelo SIRV, com $\nu = 0.01$
+
+graficoSIRV(0.01)
+```
+
+---
+Podemos concluir que:
+
+- Com uma taxa de vacinação suficientemente alta, grande parte da população não vacinada também não é infectada pela doença (imunidadade de rebanho).
+- A curva de infectados fica muito mais achatada. Isto poderia evitar um colapso do sistema de saúde (superlotação de hospitais, falta de medicamentos, entre outros problemas).
+
+## Vacinando apenas antes da epidemia
+
+Agora vamos considerar uma outra situação: uma parte da população foi vacinada antes da epidemia começar, e não houve campanha de vacinação durante a epidemia.
+
+Neste caso, o número de vacinados $V$ se torna constante: $V = \rho S(0) \tag{8}$. Logo, o número de indivíduos suscetíveis no início da epidemia já não é mais o total, e sim $(1 - \rho) S(0)$.
