@@ -66,9 +66,9 @@ Com isso, vemos que o crescimento inicial do número de infectados é diretament
 
 ---
 
-Este sistema de equações diferenciais acopladas não possui solução analítica conhecida. Portanto, a solução é obtida numericamente. Desta vez, utilizaremos o método de Runge-Kutta de Ordem 4 (RK4) para resolver este sistema.
+Este sistema de equações diferenciais acopladas não possui solução analítica conhecida. Portanto, a solução é obtida numericamente. Desta vez, utilizaremos o método de Runge-Kutta de ordem 4 (RK4) para resolver este sistema.
 
-# O Método Runge-Kutta de Ordem 4 (RK4)
+# O Método de Runge-Kutta de Ordem 4 (RK4)
 
 ## Descrevendo o funcionamento
 

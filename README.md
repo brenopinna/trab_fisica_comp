@@ -1,4 +1,4 @@
-Trabalho sobre o uso do método de Runge-Kutta de 4ª ordem para a análise numérica do modelo SIR (Suscetível - Infectado - Removido) para epidemias, feito com a ferramenta [Quarto](https://quarto.org/).
+Trabalho sobre o uso do método de Runge-Kutta de ordem 4 para a análise numérica do modelo SIR (Suscetível - Infectado - Removido) para epidemias, feito com a ferramenta [Quarto](https://quarto.org/).
 
 Criado para a disciplina de Introdução à Física Computacional, lecionada por André Asevedo Nepomuceno no semestre 2025.2 na Universidade Federal Fluminense de Rio das Ostras.
 
