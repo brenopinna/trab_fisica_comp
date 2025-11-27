@@ -13,11 +13,9 @@ format:
   beamer:
     slide-level: 3
     theme: Madrid
-    pdf-engine: pdflatex
     toc: true
     toc-title: "Sumário"
     fig-height: 5.3
-    dpi: 200
     latex-min-runs: 3
   ipynb:
     output-file: notebook.ipynb

@@ -6,9 +6,9 @@ Seja uma doença infecciosa, causada por algum agente biológico, transmitida at
 
 Dividiremos a população em 3 grupos ($\textcolor{ForestGreen}{S}\textcolor{red}{I}\textcolor{blue}{R}$):
 
-- $\textcolor{ForestGreen}{Suscetíveis}$ à contaminação: nunca apresentaram a doença, mas podem contrair;
-- $\textcolor{red}{Infectados}$: atualmente infectados com a doença;
-- $\textcolor{blue}{Removidos}$: foram infectados e ganharam imunidade permanente.
+- $\mathrm{\textcolor{ForestGreen}{Suscetíveis}}$ à contaminação: nunca apresentaram a doença, mas podem contrair;
+- $\mathrm{\textcolor{red}{Infectados}}$: atualmente infectados com a doença;
+- $\mathrm{\textcolor{blue}{Removidos}}$: foram infectados e ganharam imunidade permanente.
 
 Suponhamos que não ocorrem nascimentos ou mortes durante o período analisado, ou seja, o número de indivíduos $N = \textcolor{ForestGreen}{S}(t) + \textcolor{red}{I}(t) + \textcolor{blue}{R}(t)$ é constante.
 
@@ -93,8 +93,8 @@ Para o nosso problema, temos:
 
 $$
 \begin{cases}
-\displaystyle\frac{dS}{dt} = - \beta S I \\[6pt]
-\displaystyle\frac{dI}{dt} = \beta S I - \gamma I \\[6pt]
+\displaystyle\frac{dS}{dt} = - \beta S I \\[9pt]
+\displaystyle\frac{dI}{dt} = \beta S I - \gamma I \\[9pt]
 \displaystyle\frac{dR}{dt} = \gamma I
 \end{cases}
 $$
@@ -119,6 +119,8 @@ Para iniciar a análise do modelo, será feita a comparação de três gráficos
 ```{python}
 import numpy as np
 import matplotlib.pyplot as plt
+
+plt.rcParams['figure.dpi'] = 200 # Para o Jupyter Notebook.
 
 # Parâmetros.
 N = 100_000
@@ -225,7 +227,7 @@ Vamos considerar que uma vacina contra a doença foi desenvolvida, e que, assim 
 
 Para isso, acrescentaremos um novo grupo ao modelo $\textcolor{ForestGreen}{S}\textcolor{red}{I}\textcolor{blue}{R}$:
 
-- $\textcolor{purple}{Vacinados}$: Foram vacinados contra a doença e ganharam imunidade permanente.
+- $\mathrm{\textcolor{purple}{Vacinados}}$: Foram vacinados contra a doença e ganharam imunidade permanente.
 
 Com isto, teremos que: $N = \textcolor{ForestGreen}{S}(t) + \textcolor{red}{I}(t) + \textcolor{blue}{R}(t) + \textcolor{purple}{V}(t)$.
 
@@ -248,7 +250,7 @@ Esta modelagem da vacinação faz algumas suposições grosseiras:
 
 ## Comparando valores de $\nu$
 
-Vamos comparar os gráficos de duas simulações com taxas de vacinação $\mu$ iguais a $0.001$, $0.01$ e $0.05$, respectivamente, e com $R_0 = 2.5$.
+Vamos comparar os gráficos de duas simulações com taxas de vacinação $\nu$ iguais a $0.001$, $0.01$ e $0.05$, respectivamente, e com $R_0 = 2.5$.
 
 ---
 
