@@ -193,19 +193,19 @@ def graficoSIR(R0):
 
   # plot
   plt.figure(figsize=(5, 3))
-  plt.plot(t_sol, y_sol[:,0], label='Suscetíveis (S)')
-  plt.plot(t_sol, y_sol[:,1], label='Infectados (I)')
-  plt.plot(t_sol, y_sol[:,2], label='Removidos (R)')
+  plt.plot(t_sol, y_sol[:,0], 'g', label='Suscetíveis (S)')
+  plt.plot(t_sol, y_sol[:,1], 'r', label='Infectados (I)')
+  plt.plot(t_sol, y_sol[:,2], 'b', label='Removidos (R)')
   plt.xlabel('Tempo (dias)')
-  plt.ylabel(r'Nº de indivíduos $(\times 10^4)$')
-  plt.title(rf'População Simulada')
+  plt.ylabel(r'Nº de indivíduos ($\times 10^4$)')
+  plt.title(rf'Simulação de Epidemia')
   plt.legend()
   plt.show()
 ```
 
 ```{python}
 #| fig-align: center
-#| fig-cap: Simulação do modelo SIR, com $R_0$ = 5
+#| fig-cap: Simulação do modelo SIR, com $R_0 = 5$
 
 graficoSIR(5)
 ```
@@ -214,7 +214,7 @@ graficoSIR(5)
 
 ```{python}
 #| fig-align: center
-#| fig-cap: Simulação do modelo SIR, com $R_0$ = 2.5
+#| fig-cap: Simulação do modelo SIR, com $R_0 = 2.5$
 
 graficoSIR(2.5)
 ```
@@ -223,7 +223,7 @@ graficoSIR(2.5)
 
 ```{python}
 #| fig-align: center
-#| fig-cap: Simulação do modelo SIR, com $R_0$ = 2
+#| fig-cap: Simulação do modelo SIR, com $R_0 = 2$
 
 graficoSIR(2)
 ```
@@ -259,9 +259,73 @@ $$
 
 - $\nu$: taxa de vacinação.
 
-## Limitações do modelo
-
 Esta modelagem da vacinação faz algumas suposições grosseiras:
 
 - Considera-se que a vacinação começou assim que os primeiros indivíduos foram infectados.
 - Considera-se que a taxa de vacinação é constante e proporcional ao número de suscetíveis.
+
+## Comparando valores de $\mu$
+
+```{python}
+# parâmetros
+R0 = 2.5
+V0 = 0
+beta = calc_beta(R0)
+```
+
+```{python}
+def fSIRV(y, t, mi):
+  S, I, R, V = y
+
+  dS = - beta * S * I - mi * S
+  dI = beta * S * I - gamma * I
+  dR = gamma * I
+  dV = mi * S
+  return np.array([dS, dI, dR, dV])
+
+def rk4_sys_SIRV(f, ti, tf, h, y0, mi):
+  tpoints = np.arange(ti, tf + h/2, h)
+  n_steps = tpoints.size - 1
+  
+  d = len(y0)
+  ypoints = np.zeros((n_steps + 1, d))
+  ypoints[0] = np.array(y0)
+
+  y = ypoints[0].copy()
+  for i in range(n_steps):
+      t = tpoints[i]
+      k1 = h * fSIRV(y, t, mi)
+      k2 = h * fSIRV(y + 0.5 * k1, t + 0.5 * h, mi)
+      k3 = h * fSIRV(y + 0.5 * k2, t + 0.5 * h, mi)
+      k4 = h * fSIRV(y + k3, t + h, mi)
+      y = y + (1.0/6.0) * (k1 + 2*k2 + 2*k3 + k4)
+      ypoints[i+1] = y
+
+  return tpoints, ypoints
+
+def graficoSIRV(mi):
+  y0 = [S0, I0, R0, V0] # condicoes iniciais
+
+  t_sol, y_sol = rk4_sys_SIRV(fSIRV, 0, 120, h, y0, mi)
+
+  y_sol = y_sol * 1e-4
+
+  # plot
+  plt.figure(figsize=(5, 3))
+  plt.plot(t_sol, y_sol[:,0], 'g', label='Suscetíveis (S)')
+  plt.plot(t_sol, y_sol[:,1], 'r', label='Infectados (I)')
+  plt.plot(t_sol, y_sol[:,2], 'b', label='Removidos (R)')
+  plt.plot(t_sol, ysol[:,3), 'purple', label='Vacinados (V)'])
+  plt.xlabel('Tempo (dias)')
+  plt.ylabel(r'Nº de indivíduos ($\times 10^4$)')
+  plt.title(rf'Simulação de Epidemia com Vacinação')
+  plt.legend()
+  plt.show()
+```
+
+```{python}
+#| fig-align: center
+#| fig-cap: Simulação do modelo SIRV, com $\nu = 0,0001$
+
+graficoSIRV(0.0001)
+```
