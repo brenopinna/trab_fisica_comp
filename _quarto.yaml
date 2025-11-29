@@ -1,4 +1,6 @@
 project:
+  render:
+  - slides.qmd
   output-dir: dist
 title: "Modelo SIR"
 subtitle: "Simulando uma epidemia usando Matemática e Computação"
